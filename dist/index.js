@@ -79,7 +79,7 @@ export default class AnimateNumber extends Component {
     // default values of state and non-state variables
     this.state = {
       value : this.props.initialValue || 0,
-      displayValue : 0
+      displayValue : this.props.initialValue || 0,
     }
     this.dirty = false;
     this.startFrom = 0;
@@ -90,15 +90,14 @@ export default class AnimateNumber extends Component {
     this.startFrom = this.state.value
     this.endWith = this.props.value
     this.dirty = true
-    this.startAnimate()
   }
 
-  componentWillUpdate(nextProps, nextState) {
+  componentDidUpdate(prevProps) {
 
     // check if start an animation
-    if(this.props.value !== nextProps.value) {
-      this.startFrom = this.props.value
-      this.endWith = nextProps.value
+    if(this.props.value !== prevProps.value) {
+      this.startFrom = prevProps.value
+      this.endWith = this.props.value
       this.dirty = true
       this.startAnimate()
       return
