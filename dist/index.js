@@ -24,6 +24,7 @@ export default class AnimateNumber extends Component {
     initialValue: number,
     timing : 'linear' | 'easeOut' | 'easeIn' | () => number,
     formatter : () => {},
+    initialFormatter : () => {},
     onProgress : () => {},
     onStart : () => {},
     onFinish : () => {}
@@ -34,6 +35,7 @@ export default class AnimateNumber extends Component {
     timing : 'linear',
     steps : 45,
     value : 0,
+    initialFormatter : () => {},
     formatter : (val) => val,
     onFinish : () => {}
   };
@@ -96,7 +98,7 @@ export default class AnimateNumber extends Component {
   componentDidUpdate(prevProps) {
 
     // check if start an animation
-    if(this.props.value !== prevProps.value) {
+    if(this.props.value && this.props.value !== prevProps.value) {
       this.startFrom = prevProps.value
       this.endWith = this.props.value
       this.dirty = true
@@ -126,7 +128,7 @@ export default class AnimateNumber extends Component {
   render() {
     return (
       <Text {...this.props}>
-        {this.state.displayValue}
+        {this.props.initialFormatter(this.state.displayValue)}
       </Text>)
   }
 
