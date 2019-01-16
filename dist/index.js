@@ -25,6 +25,7 @@ export default class AnimateNumber extends Component {
     timing : 'linear' | 'easeOut' | 'easeIn' | () => number,
     formatter : () => {},
     onProgress : () => {},
+    onStart : () => {},
     onFinish : () => {}
   };
 
@@ -99,6 +100,9 @@ export default class AnimateNumber extends Component {
       this.startFrom = prevProps.value
       this.endWith = this.props.value
       this.dirty = true
+      if (this.props.onStart) {
+        this.props.onStart();
+      }
       this.startAnimate()
       return
     }
